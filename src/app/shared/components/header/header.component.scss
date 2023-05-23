@@ -1,0 +1,21 @@
+.nav {
+  color: white;
+  background-color: #3f51b5;
+  font-weight: 500;
+  font-size: 2.5rem;
+  padding: 0 1rem;
+}
+.container {
+  width: 100%;
+  max-width: 1980px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+}
+.title {
+  width: 43%;
+}
+.commandbar {
+  width: 55%;
+}

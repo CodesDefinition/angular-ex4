@@ -1,0 +1,75 @@
+<div class="form-container">
+  <form [formGroup]="blogForm" (ngSubmit)="onSubmit()">
+    <h1>Blog Form</h1>
+    <div class="form-inputs">
+      <mat-form-field appearance="outline">
+        <mat-label>Blog Title</mat-label>
+        <input matInput formControlName="title" />
+      </mat-form-field>
+      <div
+        *ngIf="blogForm.get('title')?.invalid && blogForm.get('title')?.dirty"
+        class="hint"
+      >
+        <mat-error *ngIf="blogForm.get('title')?.errors?.['required']">
+          Title is required
+        </mat-error>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Author</mat-label>
+        <input matInput formControlName="author" />
+      </mat-form-field>
+      <div
+        *ngIf="blogForm.get('author')?.invalid && blogForm.get('author')?.dirty"
+        class="hint"
+      >
+        <mat-error *ngIf="blogForm.get('author')?.errors?.['required']">
+          Author is required
+        </mat-error>
+      </div>
+      <mat-form-field class="" appearance="outline">
+        <mat-label>Decription</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+      </mat-form-field>
+      <div
+        *ngIf="
+          blogForm.get('description')?.invalid &&
+          blogForm.get('description')?.dirty
+        "
+        class="hint"
+      >
+        <mat-error *ngIf="blogForm.get('description')?.errors?.['required']">
+          Description is required
+        </mat-error>
+      </div>
+      <div class="list">
+        <mat-label>Comments:</mat-label>
+        <ng-container formArrayName="comments">
+          <div *ngFor="let _ of commentsArr.controls; index as i" class="row">
+            <mat-form-field appearance="outline">
+              <input matInput [formControlName]="i" />
+            </mat-form-field>
+            <button
+              mat-raised-button
+              color="warn"
+              type="button"
+              (click)="delComment(i)"
+            >
+              Remove
+            </button>
+          </div>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="addComment()"
+          >
+            Post comment
+          </button>
+        </ng-container>
+      </div>
+    </div>
+    <div class="action-btn">
+      <button mat-raised-button color="primary">Save</button>
+    </div>
+  </form>
+</div>

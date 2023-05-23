@@ -1,0 +1,72 @@
+<div class="form-container">
+  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+    <h1>Book Form</h1>
+    <div class="form-inputs">
+      <mat-form-field appearance="outline">
+        <mat-label>Book Title</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+      <div
+        *ngIf="bookForm.get('name')?.invalid && bookForm.get('name')?.dirty"
+        class="hint"
+      >
+        <mat-error *ngIf="bookForm.get('name')?.errors?.['required']">
+          Title is required
+        </mat-error>
+      </div>
+      <div class="list">
+        <mat-label>Authors:</mat-label>
+        <ng-container formArrayName="authors">
+          <div *ngFor="let _ of authorsArr.controls; index as i" class="row">
+            <mat-form-field appearance="outline">
+              <input matInput [formControlName]="i" />
+            </mat-form-field>
+            <div
+              *ngIf="
+                bookForm.get('authors')?.invalid &&
+                bookForm.get('authors')?.dirty
+              "
+              class="hint"
+            >
+              <mat-error *ngIf="bookForm.get('authors')?.errors?.['required']">
+                Author is required
+              </mat-error>
+            </div>
+            <button
+              mat-raised-button
+              color="warn"
+              type="button"
+              (click)="delAuthor(i)"
+            >
+              Remove
+            </button>
+          </div>
+          <button
+            mat-raised-button
+            color="primary"
+            type="button"
+            (click)="addAuthor()"
+          >
+            Add Author
+          </button>
+        </ng-container>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>ISBN</mat-label>
+        <input matInput formControlName="isbn" />
+      </mat-form-field>
+      <div
+        *ngIf="bookForm.get('isbn')?.invalid && bookForm.get('isbn')?.dirty"
+        class="hint"
+      >
+        <mat-error *ngIf="bookForm.get('isbn')?.errors?.['required']">
+          ISBN is required
+        </mat-error>
+      </div>
+    </div>
+    <div class="action-btn">
+      <button mat-raised-button color="primary">Save</button>
+    </div>
+  </form>
+</div>

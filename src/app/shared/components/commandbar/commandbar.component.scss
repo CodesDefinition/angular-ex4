@@ -1,0 +1,34 @@
+.command-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 1rem;
+}
+.links {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  font-size: 1.5rem;
+}
+.links:hover {
+  cursor: pointer;
+}
+.action-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
+}
+button {
+  width: 8rem;
+  height: 2.8rem;
+  font-size: 1.2rem;
+  border: 1px solid white;
+  border-radius: 0.5rem;
+  background-color: #3f51b5;
+  color: white;
+}
+button:hover {
+  cursor: pointer;
+}

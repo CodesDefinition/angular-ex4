@@ -1,0 +1,27 @@
+<div class="card-container" *ngIf="blog">
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title>{{ blog.title }}</mat-card-title>
+      <mat-card-subtitle>{{ blog.author }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ blog.description }}</p>
+    </mat-card-content>
+    <mat-card-actions class="action-button">
+      <button class="edit-btn" mat-button (click)="handleEdit(blog.id)">
+        Edit
+      </button>
+      <button mat-button (click)="handleDelete(blog.id)">Delete</button>
+    </mat-card-actions>
+    <mat-divider></mat-divider>
+
+    <div class="comment-section">
+      <div><h3>Comments:</h3></div>
+      <div class="comments">
+        <p *ngFor="let data of blog?.comments">
+          {{ data }}
+        </p>
+      </div>
+    </div>
+  </mat-card>
+</div>

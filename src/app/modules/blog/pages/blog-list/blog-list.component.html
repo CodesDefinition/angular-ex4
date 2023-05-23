@@ -1,0 +1,11 @@
+<div class="blog-container">
+  <div class="title"><h1>Blog Posts</h1></div>
+  <div class="blogs">
+    <div *ngFor="let data of getBlogs()">
+      <app-blog-item
+        [blogInput]="data"
+        (actionEmitter)="($event)"
+      ></app-blog-item>
+    </div>
+  </div>
+</div>

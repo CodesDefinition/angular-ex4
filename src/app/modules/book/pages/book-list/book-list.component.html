@@ -1,0 +1,11 @@
+<div class="book-container">
+  <div class="title"><h1>Books</h1></div>
+  <div class="books" *ngFor="let data of getBooks()">
+    <div>
+      <app-book-item
+        [bookInput]="data"
+        (actionEmiter)="getBookId($event)"
+      ></app-book-item>
+    </div>
+  </div>
+</div>

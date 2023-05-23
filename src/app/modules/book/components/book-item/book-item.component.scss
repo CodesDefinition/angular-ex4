@@ -1,0 +1,18 @@
+.card {
+  max-width: 400px;
+  background-color: white;
+}
+.action-button {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+.action-button button {
+  border: 1px solid #576cbc;
+}
+.edit-btn {
+  color: white;
+  background-color: #576cbc;
+}
