@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { BookService } from '../../services/book.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-book-form',
@@ -20,35 +20,32 @@ export class BookFormComponent {
   constructor(
     private fb: FormBuilder,
     private bookService: BookService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
-    const id = activatedRoute.snapshot.queryParams['id'];
     const name = activatedRoute.snapshot.queryParams['name'];
     const authors = activatedRoute.snapshot.queryParams['authors'];
     const isbn = activatedRoute.snapshot.queryParams['isbn'];
     this.bookForm = fb.group({
-      id: id || bookService.getBooks().length + 1,
       name: [name || '', [Validators.required]],
       authors: fb.array(authors || []),
       isbn: [isbn || '', [Validators.required, Validators.minLength(12)]],
     });
     this.authorsArr = this.bookForm.controls['authors'] as FormArray;
   }
+  id = this.activatedRoute.snapshot.queryParams['id'];
   onSubmit = () => {
+    console.log(this.bookForm.value);
+
     if (this.bookForm.valid) {
-      this.bookService.books = this.bookService.getBooks().filter((book) => {
-        if (this.bookForm.get('id')?.value == book.id) {
-          return false;
-        } else {
-          return true;
-        }
-      });
-      this.bookService.books.push(this.bookForm.value);
-      this.bookForm.reset();
-      // console.log(this.bookForm.value);
-      // this.bookService.books.push(this.bookForm.value);
-      // console.log(this.bookService.getBooks());
-      // this.bookForm.reset();
+      if (this.id) {
+        this.bookService.updateBook(this.id, this.bookForm.value).subscribe();
+        this.router.navigate(['/book']);
+      } else {
+        this.bookService.createBook(this.bookForm.value).subscribe();
+        this.bookForm.reset();
+        this.router.navigate(['/book']);
+      }
     }
   };
   addAuthor = () => {

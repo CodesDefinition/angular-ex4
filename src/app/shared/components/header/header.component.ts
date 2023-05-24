@@ -14,8 +14,19 @@ export class HeaderComponent {
     private bookService: BookService,
     private blogService: BlogService
   ) {}
+  getRouter = () => {
+    return this._router;
+  };
   edit = () => {
-    this._router.navigate([`${this._router.url}/form`]);
+    if (
+      !(
+        this._router.url == '/profile' ||
+        this._router.url == '/book/form' ||
+        this._router.url == '/blog/form'
+      )
+    ) {
+      this._router.navigate([`${this._router.url}/form`]);
+    }
   };
 
   delete = () => {};

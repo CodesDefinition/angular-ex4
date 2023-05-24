@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Blog } from '../../models/blog';
 import { Router } from '@angular/router';
 import { BlogService } from '../../services/blog.service';
+import { BlogListComponent } from '../../pages/blog-list/blog-list.component';
 
 @Component({
   selector: 'app-blog-item',
@@ -11,7 +12,13 @@ import { BlogService } from '../../services/blog.service';
 export class BlogItemComponent {
   @Input('blogInput') blog: Blog | undefined;
   @Output() actionEmitter: EventEmitter<Blog> = new EventEmitter<Blog>();
-  constructor(private router: Router, private blogService: BlogService) {}
+
+  constructor(
+    private router: Router,
+    private blogService: BlogService,
+    private bloglist: BlogListComponent
+  ) {}
+
   handleEdit = (id: number) => {
     this.actionEmitter.emit(this.blog);
     console.log('Update Blog id: ', id);
@@ -32,7 +39,8 @@ export class BlogItemComponent {
       'Are you sure you want to delete this item?'
     );
     if (checker) {
-      this.blogService.blogs = this.blogService.blogs.filter((blog) => {
+      this.blogService.delBlog(id).subscribe();
+      this.bloglist.blogs = this.bloglist.blogs.filter((blog) => {
         if (blog.id == id) {
           return false;
         } else {

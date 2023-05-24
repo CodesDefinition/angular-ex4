@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { BlogService } from '../../services/blog.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog-form',
@@ -20,15 +20,14 @@ export class BlogFormComponent {
   constructor(
     private fb: FormBuilder,
     private blogService: BlogService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
-    const id = activatedRoute.snapshot.queryParams['id'];
     const title = activatedRoute.snapshot.queryParams['title'];
     const author = activatedRoute.snapshot.queryParams['author'];
     const comments = activatedRoute.snapshot.queryParams['comments'];
     const description = activatedRoute.snapshot.queryParams['description'];
     this.blogForm = fb.group({
-      id: id || this.blogService.getBlogs.length + 1,
       title: [title || '', [Validators.required, Validators.minLength(24)]],
       description: [
         description || '',
@@ -40,20 +39,17 @@ export class BlogFormComponent {
     this.commentsArr = this.blogForm.controls['comments'] as FormArray;
     console.log(activatedRoute.snapshot.queryParams);
   }
+  id = this.activatedRoute.snapshot.queryParams['id'];
   onSubmit = () => {
     if (this.blogForm.valid) {
-      this.blogService.blogs = this.blogService.getBlogs().filter((blog) => {
-        if (this.blogForm.get('id')?.value == blog.id) {
-          return false;
-        } else {
-          return true;
-        }
-      });
-      this.blogService.blogs.push(this.blogForm.value);
-      this.blogForm.reset();
-      // console.log(this.blogForm.value);
-      // this.blogService.blogs.push(this.blogForm.value);
-      // this.blogForm.reset();
+      if (this.id) {
+        this.blogService.updateBlog(this.id, this.blogForm.value).subscribe();
+        this.router.navigate(['/blog']);
+      } else {
+        this.blogService.createBlog(this.blogForm.value).subscribe();
+        this.blogForm.reset();
+        this.router.navigate(['/blog']);
+      }
     }
   };
   addComment = () => {

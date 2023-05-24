@@ -10,6 +10,7 @@ import { BlogFormComponent } from './pages/blog-form/blog-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { SharedModule } from 'src/app/shared/shared.module';
 @NgModule({
   declarations: [BlogListComponent, BlogItemComponent, BlogFormComponent],
   imports: [
@@ -21,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    SharedModule,
   ],
 })
 export class BlogModule {}
